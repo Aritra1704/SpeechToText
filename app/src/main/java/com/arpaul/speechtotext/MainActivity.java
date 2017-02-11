@@ -9,15 +9,19 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.arpaul.speechtotext.adapter.PhrasesAdapter;
+import com.arpaul.speechtotext.common.AppConstant;
 import com.arpaul.speechtotext.dataobject.PhraseDO;
+import com.arpaul.utilitieslib.UnCaughtException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Locale;
 
 import static com.arpaul.speechtotext.common.AppConstant.strPhrases;
@@ -37,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Thread.setDefaultUncaughtExceptionHandler(new UnCaughtException(this,"aritra1704@gmail.com",getString(R.string.app_name)));
         setContentView(R.layout.activity_main);
 
         initialiseControls();
@@ -45,8 +50,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void bindControls() {
-//        arrPhrases = new ArrayList<String>(Arrays.asList(strPhrases));
-        resetPhrases();
+        arrPhrases = AppConstant.resetPhrases();
         adapter.refresh(arrPhrases);
 
         fab.setOnClickListener(new View.OnClickListener() {
@@ -86,30 +90,13 @@ public class MainActivity extends AppCompatActivity {
             case REQ_CODE_SPEECH_INPUT: {
                 if (resultCode == RESULT_OK && null != data) {
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    Toast.makeText(MainActivity.this, "REQ_CODE_SPEECH_INPUT RESULT_OK " + result.size(), Toast.LENGTH_SHORT).show();
-
-//                    StringBuilder stBuild = new StringBuilder();
-//                    for(int i = 0; i < result.size(); i++) {
-//                        String phrase = result.get(i);
-//                        stBuild.append(i + " ");
-//                        stBuild.append(phrase);
-//                    }
-//                    Toast.makeText(MainActivity.this, stBuild.toString() + result.size(), Toast.LENGTH_SHORT).show();
                     txtSpeechInput.setText(result.get(0));
+                    arrPhrases = AppConstant.checkPhrase(/*MainActivity.this, */result.get(0));
+                    adapter.refresh(arrPhrases);
                 } else
-                    Toast.makeText(MainActivity.this, "REQ_CODE_SPEECH_INPUT RESULT_None", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, getString(R.string.please_try_again), Toast.LENGTH_SHORT).show();
                 break;
             }
-        }
-        Toast.makeText(MainActivity.this, "REQ_CODE_SPEECH_INPUT OUT", Toast.LENGTH_SHORT).show();
-    }
-
-    void resetPhrases() {
-        PhraseDO objPhraseDO;
-        for(String phrase: strPhrases) {
-            objPhraseDO = new PhraseDO();
-            objPhraseDO.Phrase = phrase;
-            arrPhrases.add(objPhraseDO);
         }
     }
 
