@@ -13,11 +13,14 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.arpaul.speechtotext.adapter.PhrasesAdapter;
+import com.arpaul.speechtotext.dataobject.PhraseDO;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Locale;
 
-import static com.arpaul.speechtotext.AppConstant.strPhrases;
+import static com.arpaul.speechtotext.common.AppConstant.strPhrases;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -27,7 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView rvPhrases;
 
     private final int REQ_CODE_SPEECH_INPUT = 100;
-    ArrayList<String> arrPhrases = new ArrayList<>();
+    private ArrayList<PhraseDO> arrPhrases = new ArrayList<>();
+    private PhrasesAdapter adapter;
 
 
     @Override
@@ -41,14 +45,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void bindControls() {
-        arrPhrases = new ArrayList<String>(Arrays.asList(strPhrases));
-
+//        arrPhrases = new ArrayList<String>(Arrays.asList(strPhrases));
+        resetPhrases();
+        adapter.refresh(arrPhrases);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//                        .setAction("Action", null).show();
 
                 promptSpeechInput();
             }
@@ -99,6 +104,15 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(MainActivity.this, "REQ_CODE_SPEECH_INPUT OUT", Toast.LENGTH_SHORT).show();
     }
 
+    void resetPhrases() {
+        PhraseDO objPhraseDO;
+        for(String phrase: strPhrases) {
+            objPhraseDO = new PhraseDO();
+            objPhraseDO.Phrase = phrase;
+            arrPhrases.add(objPhraseDO);
+        }
+    }
+
     void initialiseControls() {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -108,5 +122,8 @@ public class MainActivity extends AppCompatActivity {
         rvPhrases = (RecyclerView) findViewById(R.id.rvPhrases);
 
         txtSpeechInput = (TextView) findViewById(R.id.txtSpeechInput);
+
+        adapter = new PhrasesAdapter(this, new ArrayList<PhraseDO>());
+        rvPhrases.setAdapter(adapter);
     }
 }

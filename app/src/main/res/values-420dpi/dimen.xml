@@ -6,10 +6,6 @@
 
     <item name="margin_login_" type="dimen" format="float">.65</item>
 
-    <dimen name="margintop_farm_list_cell">10dp</dimen>
-    <dimen name="marginbottom_farm_list_cell">5dp</dimen>
-    <dimen name="paddingtop_farm_list">16dp</dimen>
-
     <dimen name="margin_2_">.2dp</dimen>
     <dimen name="margin_3_">.3dp</dimen>
     <dimen name="margin_5_">.5dp</dimen>

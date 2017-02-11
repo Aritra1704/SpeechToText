@@ -1,4 +1,4 @@
-package com.arpaul.speechtotext;
+package com.arpaul.speechtotext.common;
 
 import java.util.ArrayList;
 
