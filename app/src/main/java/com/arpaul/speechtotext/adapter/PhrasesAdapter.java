@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.arpaul.speechtotext.R;
 import com.arpaul.speechtotext.dataobject.PhraseDO;
+import com.arpaul.utilitieslib.ColorUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +45,9 @@ public class PhrasesAdapter extends RecyclerView.Adapter<PhrasesAdapter.ViewHold
 
         holder.tvPhrase.setText(objPhraseDO.Phrase);
         holder.tvPhraseIteration.setText(objPhraseDO.PhraseIteration + "");
+
+        if(objPhraseDO.PhraseIteration > 0)//Highlight if iteration found
+            holder.mView.setBackgroundColor(ColorUtils.getColor(context, R.color.colorYellow));
     }
 
     @Override

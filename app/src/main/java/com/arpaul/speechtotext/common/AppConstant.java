@@ -47,17 +47,26 @@ public class AppConstant {
 
             for(String word : arrAllPhras) {
                 if(sentence.toLowerCase().contains(word)) {
-                    String[] wordOccur = sentence.split(word);
-                    int iteration = wordOccur.length;
+                    int iteration = 1;
+                    if(sentence.toLowerCase().equals(word))//If sentence contains only one phrase
+                        hashWords.put(word, iteration);
+                    else {
+                        String[] wordOccur = sentence.split(word);
+                        iteration = wordOccur.length;
 
-                    if(wordOccur != null && !word.contains(" ")) {
-                        if(!sentence.substring(sentence.lastIndexOf(" ")+1).equalsIgnoreCase(word))
-                            iteration--;
+                        if(wordOccur != null) {
+                            if(!word.contains(" ")) {//If the word in dictionary doesn't contain spaces
+                                if(!sentence.substring(sentence.lastIndexOf(" ")+1).equalsIgnoreCase(word))
+                                    iteration--;
+                            } else if(word.contains(" ") && iteration > 1) {//If the word in the phrase contain spaces
+                                if(TextUtils.isEmpty(wordOccur[0]))
+                                    iteration--;
+                            }
+                        }
+
+                        hashWords.put(word, iteration);
                     }
-
-                    hashWords.put(word, iteration);
-
-//                    Toast.makeText(context, word + " " + wordOccur.length, Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(context, word + " " + iteration, Toast.LENGTH_SHORT).show();
                 }
             }
         }
@@ -72,7 +81,8 @@ public class AppConstant {
                     objPhraseDO.PhraseIteration = hashWords.get(phrase.toLowerCase());
                 arrPhrases.add(objPhraseDO);
             }
-        }
+        } else
+            arrPhrases = resetPhrases();
 
         return arrPhrases;
     }
