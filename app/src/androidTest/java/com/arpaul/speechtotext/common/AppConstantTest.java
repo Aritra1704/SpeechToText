@@ -17,29 +17,16 @@ public class AppConstantTest {
     @Test
     public void checkPhrase() throws Exception {
 
-        ArrayList<PhraseDO> arrPhrase = new ArrayList<>();
+        ArrayList<PhraseDO> arrPhrases = new ArrayList<>();
         PhraseDO objPhraseDO;
-
-        objPhraseDO = new PhraseDO();
-        objPhraseDO.Phrase = "Quantum Inventions";
-        objPhraseDO.PhraseIteration = 1;
-        arrPhrase.add(objPhraseDO);
-
-        objPhraseDO = new PhraseDO();
-        objPhraseDO.Phrase = "Inventions";
-        objPhraseDO.PhraseIteration = 1;
-        arrPhrase.add(objPhraseDO);
-
-        objPhraseDO = new PhraseDO();
-        objPhraseDO.Phrase = "hello";
-        objPhraseDO.PhraseIteration = 1;
-        arrPhrase.add(objPhraseDO);
-
-        objPhraseDO = new PhraseDO();
-        objPhraseDO.Phrase = "incidents";
-        objPhraseDO.PhraseIteration = 1;
-        arrPhrase.add(objPhraseDO);
-//        assertThat(AppConstant.checkPhrase("Quantum Inventions hello incidents") , hasSize(4)) ;
+        for(String phrase: AppConstant.strPhrases) {
+            objPhraseDO = new PhraseDO();
+            objPhraseDO.Phrase = phrase;
+            if("Quantum Inventions hello incidents".contains(phrase))
+                objPhraseDO.PhraseIteration = 1;
+            arrPhrases.add(objPhraseDO);
+        }
+        assertEquals(AppConstant.checkPhrase("Quantum Inventions hello incidents") , arrPhrases); ;
     }
 
     @Test

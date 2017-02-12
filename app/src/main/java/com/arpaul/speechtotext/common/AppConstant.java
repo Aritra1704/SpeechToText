@@ -1,10 +1,7 @@
 package com.arpaul.speechtotext.common;
 
-import android.content.Context;
 import android.text.TextUtils;
-import android.widget.Toast;
 
-import com.arpaul.speechtotext.MainActivity;
 import com.arpaul.speechtotext.dataobject.PhraseDO;
 
 import java.util.ArrayList;
