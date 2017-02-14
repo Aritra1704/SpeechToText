@@ -25,45 +25,36 @@ public class AppConstant {
                                                             "Incidents",
                                                             "Navigate to"};
 
-    public static ArrayList<PhraseDO> checkPhrase(/*Context context, */String sentence) {
+    public static ArrayList<PhraseDO> checkPhrase(ArrayList<String> sentences) {
         ArrayList<PhraseDO> arrPhrases = new ArrayList<PhraseDO>();
         HashMap<String, Integer> hashWords = new HashMap<>();
-        if(!TextUtils.isEmpty(sentence)) {
-            String[] words = sentence.split(" ");
-            ArrayList<String> arrAllPhras = getAllPhrases();
+        for(String sentence : sentences) {
 
-//            for(String word : words) {
-//                if(arrAllPhras.contains(word)) {
-//                    int iteration = 1;
-//                    if(hashWords.containsKey(word)) {
-//                        iteration = hashWords.get(word) + 1;
-//                    }
-//                    hashWords.put(word, iteration);
-//                }
-//            }
+            if(!TextUtils.isEmpty(sentence)) {
+                ArrayList<String> arrAllPhras = getAllPhrases();
 
-            for(String word : arrAllPhras) {
-                if(sentence.toLowerCase().contains(word)) {
-                    int iteration = 1;
-                    if(sentence.toLowerCase().equals(word))//If sentence contains only one phrase
-                        hashWords.put(word, iteration);
-                    else {
-                        String[] wordOccur = sentence.split(word);
-                        iteration = wordOccur.length;
+                for(String word : arrAllPhras) {
+                    if(sentence.toLowerCase().contains(word)) {
+                        int iteration = 1;
+                        if(sentence.toLowerCase().equals(word))//If sentence contains only one phrase
+                            hashWords.put(word, iteration);
+                        else {
+                            String[] wordOccur = sentence.split(word);//Spliting in order to calculate repetation. Otherwise could checked using contains.
+                            iteration = wordOccur.length;
 
-                        if(wordOccur != null) {
-                            if(!word.contains(" ")) {//If the word in dictionary doesn't contain spaces
-                                if(!sentence.substring(sentence.lastIndexOf(" ")+1).equalsIgnoreCase(word))
-                                    iteration--;
-                            } else if(word.contains(" ") && iteration > 1) {//If the word in the phrase contain spaces
-                                if(TextUtils.isEmpty(wordOccur[0]))
-                                    iteration--;
+                            if(wordOccur != null) {
+                                if(!word.contains(" ")) {//If the word in dictionary doesn't contain spaces
+                                    if(!sentence.substring(sentence.lastIndexOf(" ")+1).equalsIgnoreCase(word))
+                                        iteration--;
+                                } else if(word.contains(" ") && iteration > 1) {//If the word in the phrase contain spaces
+                                    if(TextUtils.isEmpty(wordOccur[0]))
+                                        iteration--;
+                                }
                             }
-                        }
 
-                        hashWords.put(word, iteration);
+                            hashWords.put(word, iteration);
+                        }
                     }
-//                    Toast.makeText(context, word + " " + iteration, Toast.LENGTH_SHORT).show();
                 }
             }
         }

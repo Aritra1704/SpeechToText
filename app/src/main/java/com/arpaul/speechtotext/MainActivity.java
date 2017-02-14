@@ -90,8 +90,13 @@ public class MainActivity extends AppCompatActivity {
             case REQ_CODE_SPEECH_INPUT: {
                 if (resultCode == RESULT_OK && null != data) {
                     ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
-                    txtSpeechInput.setText(result.get(0));
-                    arrPhrases = AppConstant.checkPhrase(/*MainActivity.this, */result.get(0));
+                    StringBuilder strPhrase = new StringBuilder();
+                    for(String phrase: result) {
+                        strPhrase.append(phrase);
+                        strPhrase.append("\n");
+                    }
+                    txtSpeechInput.setText(strPhrase.toString());
+                    arrPhrases = AppConstant.checkPhrase(result);
                     adapter.refresh(arrPhrases);
                 } else
                     Toast.makeText(MainActivity.this, getString(R.string.please_try_again), Toast.LENGTH_SHORT).show();

@@ -10,7 +10,7 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/margin_190"
+        android:layout_height="@dimen/margin_240"
         android:theme="@style/AppTheme.AppBarOverlay">
 
         <android.support.v7.widget.Toolbar
@@ -31,7 +31,7 @@
             android:paddingRight="@dimen/margin_10"
             android:scrollbars="vertical"
             android:textColor="@color/colorWhite"
-            android:textSize="26dp"
+            android:textSize="@dimen/textsize_18"
             android:textStyle="normal" />
 
     </android.support.design.widget.AppBarLayout>
