@@ -3,9 +3,11 @@ package com.arpaul.speechtotext.common;
 import com.arpaul.speechtotext.dataobject.PhraseDO;
 
 import org.hamcrest.Matcher;
+import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.junit.Assert.*;
@@ -22,11 +24,18 @@ public class AppConstantTest {
         for(String phrase: AppConstant.strPhrases) {
             objPhraseDO = new PhraseDO();
             objPhraseDO.Phrase = phrase;
-            if("Quantum Inventions hello incidents".contains(phrase))
+            if("hello world twenty".contains(phrase.toLowerCase()))
                 objPhraseDO.PhraseIteration = 1;
             arrPhrases.add(objPhraseDO);
         }
-        assertEquals(AppConstant.checkPhrase("Quantum Inventions hello incidents") , arrPhrases); ;
+        ArrayList<String> arrTest = new ArrayList<>();
+//        arrTest.add("hello world 20");
+//        arrTest.add("hello world XX");
+        arrTest.add("hello world twenty");
+//        arrTest.add("helloworld xx");
+//        arrTest.add("helloworld 20");
+        Assert.assertEquals(AppConstant.checkPhrase(arrTest) , arrPhrases);
+//        AppConstant.checkPhrase(arrTest).equals(arrPhrases);
     }
 
     @Test
