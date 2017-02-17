@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     txtSpeechInput.setText(strPhrase.toString());
                     arrPhrases = AppConstant.checkPhrase(result);
+                    Toast.makeText(MainActivity.this, "result" + result.size(), Toast.LENGTH_SHORT).show();
                     adapter.refresh(arrPhrases);
                 } else
                     Toast.makeText(MainActivity.this, getString(R.string.please_try_again), Toast.LENGTH_SHORT).show();
